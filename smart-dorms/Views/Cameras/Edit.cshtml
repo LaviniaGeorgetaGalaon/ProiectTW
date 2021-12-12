@@ -1,0 +1,49 @@
+﻿@model smart_dorms.Models.Camera
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Camera</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="IdTipCamera" class="control-label"></label>
+                <select asp-for="IdTipCamera" class="form-control" asp-items="ViewBag.IdTipCamera"></select>
+                <span asp-validation-for="IdTipCamera" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NrPersoane" class="control-label"></label>
+                <input asp-for="NrPersoane" class="form-control" />
+                <span asp-validation-for="NrPersoane" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NrEtaj" class="control-label"></label>
+                <input asp-for="NrEtaj" class="form-control" />
+                <span asp-validation-for="NrEtaj" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdCamin" class="control-label"></label>
+                <select asp-for="IdCamin" class="form-control" asp-items="ViewBag.IdCamin"></select>
+                <span asp-validation-for="IdCamin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

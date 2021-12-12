@@ -1,0 +1,54 @@
+﻿@model smart_dorms.Models.Useri
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Useri</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdRol" class="control-label"></label>
+                <select asp-for="IdRol" class="form-control" asp-items="ViewBag.IdRol"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gdpr" class="control-label"></label>
+                @{
+                    var selectList = new SelectList(
+                        new List<SelectListItem>
+                        {
+                            new SelectListItem {Text = "True", Value = "True"},
+                            new SelectListItem {Text = "False", Value = "False"},
+                         }, "Value", "Text");
+                }
+                <select asp-for="Gdpr" class="form-control" asp-items="@selectList"></select>
+
+                <span asp-validation-for="Gdpr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdCamera" class="control-label"></label>
+                <select asp-for="IdCamera" class="form-control" asp-items="ViewBag.IdCamera"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdDateUser" class="control-label"></label>
+                <select asp-for="IdDateUser" class="form-control" asp-items="ViewBag.IdDateUser"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

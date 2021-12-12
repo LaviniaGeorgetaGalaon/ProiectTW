@@ -1,0 +1,90 @@
+﻿@model IEnumerable<smart_dorms.Models.Request>
+@using smart_dorms.Utils;
+@using Microsoft.AspNetCore.Http;
+
+@{
+    ViewData["Title"] = "Index";
+    bool succes = Int32.TryParse(Context.Session.GetString(smart_dorms.Utils.Constants.UserIdKey), out int currentUserId);
+}
+<head>
+    <style>
+        body {
+            background-image: url("../images/bubble.jpg");
+        }
+        .home-feature-card01 {
+            top: 1%;
+            margin-top: 7%;
+            flex: 0;
+            left: 2%;
+            width: 80%;
+            height: auto;
+            position: absolute;
+            padding: 3%;
+            padding-bottom: 4%;
+            border: 2px solid lightgray;
+            background: linear-gradient( 359.43deg, rgba(255, 255, 255, 0.1) 0.51%, rgba(255, 255, 255, 0.4) 99.52%);
+            box-shadow: 0px 4px 24px -1px rgb(212 175 156 / 25%);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            margin-left: 6%;
+        }
+    </style>
+</head>
+<div class="home-feature-card01">
+    <h1 style="align-items:center; justify-content:center; display:flex">Tichetele mele</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Prioritate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Detalii)
+                </th>
+                <th>
+                    Numar camera
+                </th>
+                <th>
+                    Tip cerere
+                </th>
+                <th>
+                    Status cerere
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                if (item.IdUser == currentUserId)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Prioritate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Detalii)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdCameraNavigation.NrCamera)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdTipCerereNavigation.Nume)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdTipStatusNavigation.Nume)
+                        </td>
+                        @{ if (item.IdTipStatus == null)
+                            {
+                                <td>
+                                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                </td>
+                            }
+                        }
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+ </div>

@@ -1,0 +1,91 @@
+﻿@model smart_dorms.Models.UploadFile
+<!doctype html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/images/bubble.jpg" />
+    <style>
+        body {
+            background-image: url("../images/bubble.jpg");
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+    <section  >
+        <div class="container" >
+            <div class="row justify-content-center">
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-11">
+                    <div class="wrapper">
+                        <div class="row no-gutters justify-content-between">
+                            <div class="col-lg-6 d-flex align-items-stretch">
+                                <div class="info-wrap w-100 p-5">
+                                    <h3 class="mb-4" style="color:black;">Va fi atasata o arhiva zip care contine o copie de pe cartea de identitate in format .jpg sau .pdf si o cerere de cazare</h3>
+                                    <div class="dbox w-100 d-flex align-items-start">
+                                        
+                                    </div>
+                                    <div class="dbox w-100 d-flex align-items-start">
+                                        <div class="text pl-4">
+                                            <p>
+                                                <span></</span><br> <br>
+
+                                            </p>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="contact-wrap w-100 p-md-5 p-4" style=" margin-top: 20%;">
+                                    <h3 class="mb-4">Trimite dosarul</h3>
+                                    <div id="form-message-warning" class="mb-4"></div>
+                                    <form  id="contactForm" asp-action="DepunereDosar" enctype="multipart/form-data">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    @*<input type="text" class="form-control" name="name" id="name" placeholder="Nume">*@
+                                                    <label class="control-label">Nume:</label>
+                                                    <input asp-for="ImageCaption" class="form-control" />
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="control-label">Documente:</label>
+                                                    <input asp-for="MyImage" class="form-control" />
+                                                   @* <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject">*@
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <input type="submit" class="btn btn-primary" />
+                                                    <div class="submitting"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/popper.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/main.js"></script>
+
+</body>
+</html>
+

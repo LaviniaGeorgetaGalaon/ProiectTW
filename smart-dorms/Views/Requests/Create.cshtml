@@ -1,0 +1,93 @@
+﻿@model smart_dorms.Models.Request
+
+@{ ViewData["Title"] = "Create"; }
+<!doctype html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/images/bubble.jpg" />
+    <style>
+        body {
+            background-image: url("../images/bubble.jpg");
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <div class="container">
+            <div class="row justify-content-center">
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-11">
+                    <div class="wrapper">
+                        <div class="row no-gutters justify-content-between">
+                            <div class="col-lg-6 d-flex align-items-stretch">
+                                <div class="info-wrap w-100 p-5">
+                                    <h3 class="mb-4" style="color:black">
+                                        Alege din lista de cereri tipul de cerere  care ti se potriveste si acorda-i o prioritate, iar noi iti raspundem in cel mai scurt timp
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="contact-wrap w-100 p-md-5 p-4">
+                                    <h3 class="mb-4" style="color:black">Anunta-ne de o problema!</h3>
+                                    <div id="form-message-warning" class="mb-4"></div>
+                                    <form id="contactForm" asp-action="Create" enctype="multipart/form-data">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label asp-for="IdTipCerere" class="control-label" style="color:black">Nume cerere</label>
+                                                    <select asp-for="IdTipCerere" class="form-control" asp-items="ViewBag.IdTipCerere"></select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label asp-for="Prioritate" class="control-label" style="color:black"></label>
+                                                    <input asp-for="Prioritate" class="form-control" max="10" min="0" placeholder="0" />
+                                                    <sub style="color:black">0 - deloc urgenta</sub><br />
+                                                    <sub style="color:black">10 - foarte urgenta</sub>
+                                                    <span asp-validation-for="Prioritate" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label asp-for="Detalii" class="control-label" style="color:black"></label>
+                                                    <input asp-for="Detalii" class="form-control" />
+                                                    <span asp-validation-for="Detalii" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <input type="submit" value="Create" class="btn btn-primary" />
+                                                    <div class="submitting"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/popper.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/main.js"></script>
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+</body>
+</html>
+

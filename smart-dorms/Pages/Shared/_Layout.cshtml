@@ -1,0 +1,88 @@
+﻿@using Microsoft.AspNetCore.Http;
+@using Newtonsoft.Json;
+@using smart_dorms.Models;
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>@ViewData["Title"] - UVT.Dorms</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200&display=swap" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Muli' rel='stylesheet'>
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/style2.css" />
+    <link rel="stylesheet" href="~/css/Layout-style.css" />
+</head>
+<body>
+    <div>
+        <meta property="og:title" content="New Project" />
+        <div class="home-container">
+            <div class="home-feature-card">
+                <div class="home-sidebar">
+                    <nav class="home-nav">
+                        <img alt="image"
+                             src="https://images-ext-1.discordapp.net/external/xagKxayGn2lMyfuQUQjhgnFEVlK-C4JLS2QahYcwd1s/https/ermas2016.uvt.ro/img/FIGURE3_UVT.png"
+                             class="home-image" />
+                        @{
+                            var user = JsonConvert.DeserializeObject<Useri>(Context.Session.GetString(smart_dorms.Utils.Constants.UserKey));
+                            bool isAdmin = user == null ? false : user.IsAdmin;
+
+                            if (isAdmin)
+                            {
+
+                                <a class="home-text19" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="home-text20" asp-area=" " asp-controller="Camins" asp-action="Index">Camine</a>
+                                <a class="home-text21" asp-area="" asp-controller="Cameras" asp-action="Status">Status camere</a>
+                                <a class="home-text22" asp-area=" " asp-controller="Requests" asp-action="Index">Vizualizare tichete</a>
+                                
+                                   
+                                        if (User.Identity.IsAuthenticated)
+                                        {
+
+                                            <a class="home-text24" asp-area="AzureAD" asp-controller="Account" asp-action="SignOut">Deconectare</a>
+
+                                        }
+                                        else
+                                        {
+
+                                            <a class="home-text24" asp-area="AzureAD" asp-controller="Account" asp-action="SignIn">Conectare</a>
+
+                                        }
+                                    
+                                
+                            }
+                            else
+                            {
+                                <a class="home-text19" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="home-text20" asp-area=" " asp-controller="Camins" asp-action="Index">Camine</a>
+                                <a class="home-text21" asp-area="" asp-controller="Cameras" asp-action="Status">Status camere</a>
+                                <a class="home-text22" asp-area=" " asp-controller="Requests" asp-action="Create">Creare tichet</a>
+                                <a class="home-text23" asp-area=" " asp-controller="Requests" asp-action="IstoricCereri">Tichetele mele</a>                                   
+                                        if (User.Identity.IsAuthenticated)
+                                        {
+                                            <a class="home-text24" asp-area="AzureAD" asp-controller="Account" asp-action="SignOut">Deconectare <i class="fa fa-sign-out" aria-hidden="true"></i></a>
+                                        }
+                                        else
+                                        {
+                                            <a class="home-text24" asp-area="AzureAD" asp-controller="Account" asp-action="SignIn">Conectare</a>
+                                        }                               
+                            }
+                        }
+                    </nav>
+                </div>
+                <div class="home-feature-card-new">
+                    <main role="main" class="pb-3">
+                        @RenderBody()
+                    </main>
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

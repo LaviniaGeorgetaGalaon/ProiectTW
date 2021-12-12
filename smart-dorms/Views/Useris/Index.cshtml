@@ -1,0 +1,66 @@
+﻿@model IEnumerable<smart_dorms.Models.Useri>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Utilizatori: </h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Protectia datelor (GDPR)
+            </th>
+            <th>
+                Camin
+            </th>
+            <th>
+                Numarul camerei
+            </th>
+            <th>
+               ID utilizator
+            </th>
+            <th>
+                Nume utilizator 
+            </th>
+            <th>
+                Rol
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gdpr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCameraNavigation.IdCaminNavigation.NameCamin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCameraNavigation.NrCamera)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdDateUserNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdDateUserNavigation.Nume)
+                @Html.DisplayFor(modelItem => item.IdDateUserNavigation.Prenume)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdRolNavigation.Nume)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

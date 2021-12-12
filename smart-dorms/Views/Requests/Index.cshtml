@@ -1,0 +1,96 @@
+﻿@model IEnumerable<smart_dorms.Models.Request>
+@using smart_dorms.Utils
+
+@{
+    ViewData["Title"] = "Index";
+}
+<head>
+    <style>
+        body {
+            background-image: url("../images/bubble.jpg");
+        }
+
+        .home-feature-card01 {
+            top: 1%;
+            margin-top: 7%;
+            flex: 0;
+            left: 2%;
+            width: 90%;
+            height: auto;
+            position: absolute;
+            padding: 3%;
+            padding-bottom: 4%;
+            border: 2px solid lightgray;
+            background: linear-gradient( 359.43deg, rgba(255, 255, 255, 0.1) 0.51%, rgba(255, 255, 255, 0.4) 99.52%);
+            box-shadow: 0px 4px 24px -1px rgb(212 175 156 / 25%);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            margin-left: 2%;
+        }
+    </style>
+</head>
+<div class="home-feature-card01">
+    <h1 style="align-items:center; justify-content:center; display:flex">Tichete</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Prioritate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Detalii)
+                </th>
+                <th>
+                    Nr. camera
+                </th>
+                <th>
+                    Tip cerere
+                </th>
+                <th>
+                    Status cerere
+                </th>
+                <th>
+                    Cine a depus cererea
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Prioritate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Detalii)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdCameraNavigation.NrCamera)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdTipCerereNavigation.Nume)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdTipStatusNavigation.Nume)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdUserNavigation.IdDateUserNavigation.Email)
+                    </td>
+                    <td>
+                        <a style="color:black" asp-action="Approve" asp-route-id="@item.Id">Aprobati</a> |
+                        <a style="color:black" asp-action="Details" asp-route-id="@item.Id">Detalii</a> |
+                        <a style="color:black" asp-action="Deny" asp-route-id="@item.Id">Respingeti</a> |
+                        @{
+                            if (item.IdTipCerere == (int)StudentRequestType.Student)
+                            {
+                                <a style="color:black" asp-action="DownloadDetails" asp-route-id="@item.Id">Descarcati</a>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

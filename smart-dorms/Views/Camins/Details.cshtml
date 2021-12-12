@@ -1,0 +1,180 @@
+﻿@model smart_dorms.Models.Camin
+@using smart_dorms.Models;
+@using smart_dorms.Utils;
+@using Microsoft.AspNetCore.Http;
+
+@{
+    ViewData["Title"] = "Details";
+    bool isAdmin = bool.Parse(Context.Session.GetString(smart_dorms.Utils.Constants.IsAdminKey));
+    bool succes = Int32.TryParse(Context.Session.GetString(smart_dorms.Utils.Constants.RoomKey), out int userCameraId);
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>W3.CSS Template</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body, h1, h2, h3, h4, h5, h6 {
+            font-family: "Raleway", Arial, Helvetica, sans-serif
+        }
+
+        .mySlides {
+            display: none
+        }
+    </style>
+</head>
+<body>
+    <div class="w3-main w3-white" style="margin-left:260px">
+        <div class="w3-hide-large" style="margin-top:80px"></div>
+        <div class="w3-container" id="apartment">
+            <h1>Caminul @Model.NameCamin</h1>
+
+            <div class="w3-display-container mySlides">
+                <img src="https://images-ext-1.discordapp.net/external/mv_tajxNeR3sMaBJNMilUQgjmcl6br9DIr99evVmioU/https/oficialmedia.com/wp-content/uploads/2020/10/caminUVT2.jpg" style="width:100%;margin-bottom:-6px">
+                <div class="w3-display-bottomleft w3-container w3-black">
+                    <p>Caminul</p>
+                </div>
+            </div>
+            <div class="w3-display-container mySlides">
+                <img src="https://arhiblog.ro/poze/2017/08/14-bucatarie-camin-studentesc-arcca.jpg" style="width:100%;margin-bottom:-6px">
+                <div class="w3-display-bottomleft w3-container w3-black">
+                    <p>Bucatarii</p>
+                </div>
+            </div>
+            <div class="w3-display-container mySlides">
+                <img src="https://oficialmedia.com/proiectul-si-stadiul-lucrarilor-noului-camin-multifunctional-al-uvt-a-fost-prezentat-lui-ludovic-orban-de-catre-marilen-pirtea/caminuvt6/" style="width:100%;margin-bottom:-6px">
+                <div class="w3-display-bottomleft w3-container w3-black">
+                    <p>Bai</p>
+                </div>
+            </div>
+        </div>
+        <div class="w3-row-padding w3-section">
+            <div class="w3-col s3">
+                <img class="demo w3-opacity w3-hover-opacity-off" src="https://images-ext-1.discordapp.net/external/mv_tajxNeR3sMaBJNMilUQgjmcl6br9DIr99evVmioU/https/oficialmedia.com/wp-content/uploads/2020/10/caminUVT2.jpg" style="width:100%;cursor:pointer" onclick="currentDiv(1)" title="Caminul">
+            </div>
+            <div class="w3-col s3">
+                <img class="demo w3-opacity w3-hover-opacity-off" src="https://arhiblog.ro/poze/2017/08/14-bucatarie-camin-studentesc-arcca.jpg" style="width:100%;cursor:pointer" onclick="currentDiv(2)" title="Bucatarii">
+            </div>
+            <div class="w3-col s3">
+                <img class="demo w3-opacity w3-hover-opacity-off" src="https://oficialmedia.com/proiectul-si-stadiul-lucrarilor-noului-camin-multifunctional-al-uvt-a-fost-prezentat-lui-ludovic-orban-de-catre-marilen-pirtea/caminuvt6/" style="width:100%;cursor:pointer" onclick="currentDiv(3)" title="Bai">
+            </div>
+        </div>
+
+        <div class="w3-container">
+            <h4><strong>Locație cămin:</strong></h4>
+            <div class="w3-row w3-large">
+                <div class="w3-col s6">
+                    <p> @Model.LocatieCamin </p>
+                    <a asp-action="Map" asp-route-id="@Model.Id" style="color: orangered">Vezi pe harta</a>
+                </div>
+            </div>
+            <hr>
+
+            <h4><strong>Facilități</strong></h4>
+            <p>
+                <i class="fa fa-fw fa-shower"></i>
+                <i class="fa fa-fw fa-wifi"></i>
+                <i class="fa fa-fw fa-tv"></i>
+                <i class="fa fa-fw fa-cutlery"></i>
+                <i class="fa fa-fw fa-thermometer"></i>
+                <i class="fa fa-fw fa-wheelchair"></i>
+            </p>
+            <div class="w3-row w3-large">
+                <div class="w3-col s6">
+
+                    @{int nr = 0;
+                        var map = new Dictionary<String, int>();
+                        List<Camera> l = (List<Camera>)ViewData[Constants.FacilitatiListKey];
+                        nr = l.Count();
+                        <p>
+                            @($"Avem {nr} camere in camin, dintre care: ")
+                        </p>
+                    }
+                    <table>
+                        <tr>
+                            <th>Tip: </th>
+                            <th>Numar: </th>
+                        </tr>
+                        @{ foreach (Camera o in (List<Camera>)ViewData[Constants.FacilitatiListKey])
+                            {
+                                int ok = 0;
+                                foreach (Camera c in (List<Camera>)ViewData[Constants.FacilitatiListKey])
+                                {
+                                    if (o.IdTipCameraNavigation.Nume.Equals(c.IdTipCameraNavigation.Nume))
+                                    {
+                                        ok++;
+                                    }
+
+                                }
+                                if (!map.ContainsKey(o.IdTipCameraNavigation.Nume))
+                                {
+                                    map.Add(o.IdTipCameraNavigation.Nume, ok);
+                                }
+                            }
+                            foreach (var c in map.Keys)
+                            {
+                                <tr>
+                                    <td>
+                                        @c
+                                    </td>
+                                    <td>
+                                        @map[c]
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+            <hr>
+            <a asp-action="Index">Inapoi la lista de camine </a>
+        </div>
+        <hr>
+    </div>
+
+
+
+    <script>
+        function w3_open() {
+            document.getElementById("mySidebar").style.display = "block";
+            document.getElementById("myOverlay").style.display = "block";
+        }
+
+        function w3_close() {
+            document.getElementById("mySidebar").style.display = "none";
+            document.getElementById("myOverlay").style.display = "none";
+        }
+        var slideIndex = 1;
+        showDivs(slideIndex);
+
+        function plusDivs(n) {
+            showDivs(slideIndex += n);
+        }
+
+        function currentDiv(n) {
+            showDivs(slideIndex = n);
+        }
+
+        function showDivs(n) {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demo");
+            if (n > x.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = x.length }
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" w3-opacity-off", "");
+            }
+            x[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " w3-opacity-off";
+        }
+    </script>
+
+</body>
+</html>

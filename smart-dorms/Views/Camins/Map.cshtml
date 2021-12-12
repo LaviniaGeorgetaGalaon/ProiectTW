@@ -1,0 +1,98 @@
+﻿@model smart_dorms.Models.Camin
+@using smart_dorms.Models;
+@{
+    ViewData["Title"] = "Details";
+}
+
+<head>
+    <meta charset="utf-8">
+    <title>Add a marker using a place name</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js"></script>
+    <style>
+
+        #map {
+            align-content: center;
+            top: 1%;
+            margin-top: 7%;
+            flex: 0;
+            left: 2%;
+            width: 80%;
+            height: 500px;
+            display: flex;
+            position: absolute;
+            padding: 3%;
+            align-items: center;
+            border-color: rgba(120, 120, 120, 0.4);
+            border-style: hidden;
+            border-width: 2px;
+            border-radius: 25px;
+            flex-direction: column;
+            justify-content: flex-start;
+            margin-left: 6%;
+            border-radius: 25px;
+        }
+        .back {
+            background: #34c6eb;
+            border: 3px solid #2daecf;
+            align-content: center;
+            margin-top: 50%;
+            flex: 0;
+            left: 2%;
+            width: 10%;
+            height: 2%;
+            display: flex;
+            position: absolute;
+            border-color: rgba(120, 120, 120, 0.4);
+            border-style: hidden;
+            border-width: 2px;
+            border-radius: 25px;
+            margin-left: 6%;
+            border-radius: 25px;
+        }
+        }
+    </style>
+</head>
+
+    <div id="map">
+    </div>
+
+    <script src="https://unpkg.com/es6-promise@4.2.4/dist/es6-promise.auto.min.js"></script>
+    <script src="https://unpkg.com/	%40mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoibGF2aW5pYWdhbGFvbiIsImEiOiJja29raGQweTAwNXYxMnVxbmlqcGlnYTlrIn0.TB2uILRvD_-4L3hcgb-48Q';
+        var mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
+        var Locatie = '@Model.LocatieCamin';
+        mapboxClient.geocoding
+            .forwardGeocode({
+                query: Locatie,
+                autocomplete: false,
+                limit: 1
+            })
+            .send()
+            .then(function (response) {
+                if (
+                    response &&
+                    response.body &&
+                    response.body.features &&
+                    response.body.features.length
+                ) {
+                    var feature = response.body.features[0];
+
+                    var map = new mapboxgl.Map({
+                        container: 'map',
+                        style: 'mapbox://styles/mapbox/streets-v11',
+                        center: feature.center,
+                        zoom: 15
+                    });
+
+                    // Create a marker and add it to the map.
+                    new mapboxgl.Marker().setLngLat(feature.center).addTo(map);
+                }
+            });
+    </script>
+    <hr>
+    <a asp-action="Details" asp-route-id="@Model.Id" class="back">Inapoi la detalii </a>
+

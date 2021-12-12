@@ -1,0 +1,102 @@
+﻿@model IEnumerable<smart_dorms.Models.Camera>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<head>
+    <style>
+        body {
+            background-image: url("../images/bubble.jpg");
+        }
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+        .home-feature-card01 {
+            top: 1%;
+            margin-top: 7%;
+            flex: 0;
+            left: 2%;
+            width: 80%;
+            height: auto;
+            position: absolute;
+            padding: 3%;
+            padding-bottom: 4%;
+            border: 2px solid lightgray;
+            background: linear-gradient( 359.43deg, rgba(255, 255, 255, 0.1) 0.51%, rgba(255, 255, 255, 0.4) 99.52%);
+            box-shadow: 0px 4px 24px -1px rgb(212 175 156 / 25%);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            margin-left: 6%;
+        }
+    </style>
+</head>
+
+<div class="home-feature-card01">
+    <h1 style="align-items:center; justify-content:center; display:flex">Status camere</h1>
+    <h3>
+        Etajul
+        @(Model.First().NrEtaj)<br />
+        Caminul  @(Model.First().IdCaminNavigation.NameCamin)
+    </h3>
+
+    <table class="table">
+
+        <tbody>
+            <tr>
+                @{
+                    foreach (var item in Model.Where(x => x.NrCamera <= 25))
+                    {
+                        <td style="background: @( item.NrPersoane < item.IdTipCameraNavigation.NrMaxLocuriDisp ? "#58e502" : "#ff0000") ">
+                            <a style="color: black; align-items: center; justify-content: center; display: flex" asp-controller="Cameras" asp-action="Details" asp-route-id="@(item.Id)"> @Html.DisplayFor(modelItem => item.NrCamera)</a>
+                        </td>
+                    }
+                }
+            </tr>
+            <tr>
+                @{
+                    for (int i = 0; i < 25; i++)
+                    {
+                        <td />
+                    }
+                }
+            </tr>
+            <tr>
+                @{
+                    foreach (var item in Model.Where(x => x.NrCamera > 25 && x.NrCamera <= 50))
+                    {
+                        <td style="background: @( item.NrPersoane < item.IdTipCameraNavigation.NrMaxLocuriDisp ? "green" : "red") ">
+                            <a style="color:black" asp-controller="Cameras" asp-action="Details" asp-route-id="@(item.Id)"> @Html.DisplayFor(modelItem => item.NrCamera)</a>
+
+                        </td>
+                    }
+                }
+            </tr>
+        </tbody>
+    </table>
+    <a asp-controller="Cameras" asp-action="Status" asp-route-etaj="@(Model.First().NrEtaj == 1 ? Model.First().NrEtaj : Model.First().NrEtaj - 1)" asp-route-camin="@(Model.First().IdCamin)">Etajul anterior</a>
+    <a style="float: right;" asp-controller="Cameras" asp-action="Status" asp-route-etaj="@(Model.First().NrEtaj < 3 ? Model.First().NrEtaj + 1 : Model.First().NrEtaj=1 )" asp-route-camin="@(Model.First().IdCamin)">Urmatorul Etaj</a>
+    <br>
+    <a style="float: right;" asp-controller="Cameras" asp-action="Status" asp-route-etaj="@(Model.First().NrEtaj = 1)" asp-route-camin="@(Model.First().IdCamin < 5 ? Model.First().IdCamin+1: Model.First().IdCamin=1)">Urmatorul camin</a>
+
+    <a asp-controller="Cameras" asp-action="Status" asp-route-etaj="@(Model.First().NrEtaj = 1)" asp-route-camin="@(Model.First().IdCamin == 1 ? Model.First().IdCamin: Model.First().IdCamin-1)">Caminul anterior</a>
+
+    <br>
+    @if (Model.First().NrEtaj == 3)
+    {
+        <a style="float: right;" asp-controller="Cameras" asp-action="Status" asp-route-etaj="@(Model.First().NrEtaj = 1)" asp-route-camin="@(Model.First().IdCamin <= 5 ? Model.First().IdCamin+1: Model.First().IdCamin=1)">Urmatorul camin</a>
+
+    }
+</div>

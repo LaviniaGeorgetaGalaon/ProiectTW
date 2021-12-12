@@ -1,0 +1,161 @@
+﻿@model IEnumerable<smart_dorms.Models.Camin>
+@using Microsoft.AspNetCore.Http;
+@using Newtonsoft.Json;
+
+@{
+    ViewData["Title"] = "Index";
+    var user = JsonConvert.DeserializeObject<smart_dorms.Models.Useri>(Context.Session.GetString(smart_dorms.Utils.Constants.UserKey));
+    bool isAdmin = user == null ? false : user.IsAdmin;
+}
+
+
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Muli' rel='stylesheet'>
+    <link rel="stylesheet" href="/css/camin.css"/>
+    
+    <style>
+        html {
+            font-family: 'Muli';
+        }
+        body {
+            background-image: url("../images/bubble.jpg");
+        }
+        table {
+            width: 85%;
+            border-radius: 10px;
+        }
+
+        th {
+            color: #ffffff;
+            background-color: #a2d2ff;
+            font-weight: unset !important;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            font-size: 1.3vw;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            padding-left: 10px;
+        }
+
+        tr:hover {
+            background-color: #ececff;
+        }
+
+        td {
+            font-size: 18px;
+            color: #666666;
+            line-height: 1;
+            font-size: 1.1vw;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        tr {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+
+        .first, .first-header {
+            width: 25%;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        .second, .second-header {
+            width: 50%;
+        }
+
+        .third, .third-header {
+            width: 25%;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
+
+        @@media all and (max-width: 967px) {
+            table {
+                width: 500px;
+            }
+        }
+
+        @@media all and (max-width: 400px) {
+            table {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+
+<div>
+    <!--dust particel
+    <div>
+        <div class="starsec"></div>
+        <div class="starthird"></div>
+        <div class="starfourth"></div>
+        <div class="starfifth"></div>
+    </div>-->
+   
+    <div class="home-feature-card01">
+        <table>
+            <thead>
+                <tr class="tr_head">
+                    <th class="first-header">
+                        Nume Camin
+                    </th>
+                    <th class="second-header">
+                        Adresa
+                    </th>
+                    <th class="third-header"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="first">
+
+                            @Html.DisplayFor(modelItem => item.NameCamin)
+                        </td>
+                        <td class="second">
+                            @Html.DisplayFor(modelItem => item.LocatieCamin)
+
+                        </td>
+
+                        @{
+                            if (isAdmin)
+                            {
+                                <td class="third">
+                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                    <a asp-action="Details" asp-route-id="@item.Id">Detalii</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.Id">Stergeti</a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="third">
+                                    <a asp-action="Details" asp-route-id="@item.Id">Detalii</a>
+                                </td>
+                            }
+                        }
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+@{
+    if (isAdmin)
+    {
+        <p>
+            <a asp-action="Create">Creati un camin nou!</a>
+        </p>
+    }
+}

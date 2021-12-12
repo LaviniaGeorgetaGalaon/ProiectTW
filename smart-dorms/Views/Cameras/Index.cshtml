@@ -1,0 +1,55 @@
+﻿@model IEnumerable<smart_dorms.Models.Camera>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Camere</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Numar camera
+            </th>
+            <th>
+                Numar de persoane
+            </th>
+            <th>
+                Etaj
+            </th>
+            <th>
+                Nume camin
+            </th>
+            <th>
+                Tip camera
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NrCamera)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NrPersoane)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NrEtaj)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdCaminNavigation.NameCamin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdTipCameraNavigation.Nume)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

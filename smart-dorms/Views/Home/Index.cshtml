@@ -1,0 +1,354 @@
+﻿@using smart_dorms.Models;
+@using smart_dorms.Utils;
+@using Microsoft.AspNetCore.Http;
+@using Newtonsoft.Json;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+
+@{
+    ViewData["Title"] = "Home Page";
+    string popUpMesssage = Context.Session.GetString(Constants.PopUpMessageKey);
+    Context.Session.Remove(Constants.PopUpMessageKey);
+    bool succes = Int32.TryParse(Context.Session.GetString(smart_dorms.Utils.Constants.RoomKey), out int userCameraId);
+    var user = JsonConvert.DeserializeObject<Useri>(Context.Session.GetString(smart_dorms.Utils.Constants.UserKey));
+    bool isAdmin = user == null ? false : user.IsAdmin;
+}
+@if (!string.IsNullOrEmpty(popUpMesssage))
+{
+    <script>alert("@popUpMesssage");</script>
+}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <link href='https://fonts.googleapis.com/css?family=Muli' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/home.css" />
+    <link rel="stylesheet" href="./style2.css" />
+</head>
+<div>
+    <div >
+        <div >
+            <div class="home-feature-card01"> 
+                <div class="description">
+                    <div class="left-side">
+                        @{
+                            if (User.Identity.IsAuthenticated)
+                            {
+                                <p style="font-weight:bold">
+                                    <span class="wave">👋</span>
+                                    <b>Hello,</b>
+
+                                    <span class="txt-rotate" style="color: #ff004d"
+                                          data-period="2000"
+                                          data-rotate='[ "@User.Identity.Name", "nice to see you again!" ]'></span>
+                                </p>
+                                <!-- partial -->
+                                <script src="/js/script.js"></script>
+                            }
+                        }
+                    </div>
+                    <div class="right-side">
+                        <div>
+                            @{
+                                if (!isAdmin)
+                                {
+                                    if (succes && userCameraId != null)
+                                    {
+                                        
+
+                                    <span style="margin-left: 50%; font-weight: bold;">Mergi la <a class="camera" asp-controller="Cameras" asp-action="Details" asp-route-id="@Context.Session.GetString(Constants.RoomKey)">camera ta</a></span>
+
+                                    }
+
+
+                                    else
+                                    {
+                                        <a style="color:black" asp-controller="Cameras" asp-action="Status"> Alege o camera!</a>
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="home-feature-card02">
+                    <h2 class="home-heading">Cine suntem si ce putem face pentru tine?</h2>
+                    <p style="text-align:center; font-family:'Muli';">Serviciul Cazare Studenti asigura logistica intregului proces de cazare, realizeaza etapele de redistribuire si cazarea studentilor straini. Comisia de Cazare este responsabila cu repartizarea locurilor de cazare si cu managementul intregului proces. </p>
+                </div>
+                <span class="home-text"></span>
+                <div class="home-container1">
+                    <div class="home-container2">
+                        <div class="home-feature-card03">
+                            <svg viewBox="0 0 1024 1024" class="home-icon">
+                                <path d="M512 736l-264 160 70-300-232-202 306-26 120-282 120 282 306 26-232 202 70 300z"></path>
+                            </svg>
+                            <h2 class="home-text01">Comfort</h2>
+                            <span class="home-text02">Universitatea de Vest ofera studentilor cele mai bune conditii de cazare in cele 7 campusuri universitare.</span>
+                        </div>
+                        <div class="home-feature-card04">
+                            <svg viewBox="0 0 1024 1024" class="home-icon02">
+                                <path d="M384 690l452-452 60 60-512 512-238-238 60-60z"></path>
+                            </svg>
+                            <h2 class="home-text03">Calitate</h2>
+                            <span class="home-text04">Repartizarea locurilor se face proportional pe facultati si ani, in functie de performantele academice ale studentilor. </span>
+                        </div>
+                        <div class="home-feature-card05">
+                            <svg viewBox="0 0 1024 1024" class="home-icon04">
+                                <path d="M554 726q-18 0-30-13t-12-31 12-30 30-12 31 12 13 30-13 31-31 13zM554 554q-18 0-30-12t-12-30 12-30 30-12 31 12 13 30-13 30-31 12zM554 384q-18 0-30-12t-12-30 12-31 30-13 31 13 13 31-13 30-31 12zM726 534q-22 0-22-22t22-22q20 0 20 22t-20 22zM726 362q-22 0-22-20 0-22 22-22 20 0 20 22 0 20-20 20zM128 128h768v86h-768v-86zM726 704q-22 0-22-22 0-20 22-20 20 0 20 20 0 22-20 22zM384 726q-18 0-30-13t-12-31 12-30 30-12 30 12 12 30-12 31-30 13zM214 576q-26 0-45-18t-19-46 19-46 45-18 45 18 19 46-19 46-45 18zM214 406q-26 0-45-19t-19-45 19-45 45-19 45 19 19 45-19 45-45 19zM128 896v-86h768v86h-768zM384 384q-18 0-30-12t-12-30 12-31 30-13 30 13 12 31-12 30-30 12zM384 554q-18 0-30-12t-12-30 12-30 30-12 30 12 12 30-12 30-30 12zM214 746q-26 0-45-19t-19-45 19-45 45-19 45 19 19 45-19 45-45 19z"></path>
+                            </svg>
+                            <h2 class="home-text05">Transparenta</h2>
+                            <span class="home-text06">Studentii au parte de un proces de cazare transparent si cu respectarea metodologie, cu drept la contestatie.</span>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <h2>Cazare</h2>
+                <span class="home-text">
+
+                    UVT oferă studenților săi 3005 locuri de cazare în 8 cămine diferite (6 dintre ele fiind situate în Complexul Studențesc), fiecare având diverse dotări:<br>
+                    <p class="cazare">
+                        Trei cămine cu camere de 5 locuri ( facilități comune: grupuri sanitare și bucătării pe fiecare palier): căminele C15, C16  și C17<br>
+                        Un cămin cu camere de 4 locuri ( facilități comune: grupuri sanitare și bucătării pe fiecare palier) : căminul C3 ;<br>
+                        Două cămine cu camere de două locuri ( facilități comune: grupuri sanitare și bucătării pe fiecare palier) : căminele C12 și C13;<br>
+                        Un cămin cu camere de 3 locuri ( grup sanitar propriu și bucătării comune) : căminul Camelia ;<br>
+                        Un cămin cu camere de 2 locuri, tip garsonieră, ( grup sanitar propriu, bucătărie proprie ): căminul Drept – dedicat exclusiv studenților Facultății de Drept.<br>
+                        Pe lângă căminele anterior menționate, Universitatea de Vest din Timișoara deține încă 2 cămine care se află în proces de construcție, totalizând un număr de aproximativ 1500 de locuri de cazare. Se preconizează că lucrările vor fi finalizate și studenții vor putea fi cazați în noile cămine în anul 2021, respectiv în toamna anului 2022. Camerele vor fi dotate cu baie și bucătărie proprie, iar capacitatea va fi de 2-3 persoane/cameră.
+                    </p>
+                </span>
+
+                <div class="home-feature-card06">
+                    <button id="myBtn">TAXA CAMIN</button>
+                    <!-- The Modal -->
+                    <div id="myModal" class="modal">
+
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <table>
+                                <tr>
+                                    <th>Camin</th>
+                                    <th>Tarif</th>
+                                    <th>Observatii</th>
+                                </tr>
+                                <tr>
+                                    <td>C12</td>
+                                    <td>145</td>
+                                    <td>*</td>
+                                </tr>
+                                <tr>
+                                    <td>C13</td>
+                                    <td>145</td>
+                                    <td>*</td>
+                                </tr>
+                                <tr>
+                                    <td>CAMELIA</td>
+                                    <td>145</td>
+                                    <td>*</td>
+                                </tr>
+                                <tr>
+                                    <td>C15</td>
+                                    <td>120</td>
+                                    <td>*</td>
+                                </tr>
+                                <tr>
+                                    <td>C16</td>
+                                    <td>120</td>
+                                    <td>*</td>
+                                </tr>
+                                <tr>
+                                    <td>C17</td>
+                                    <td>120</td>
+                                    <td>*</td>
+                                </tr>
+                                <tr>
+                                    <td>C3</td>
+                                    <td>115</td>
+                                    <td>*</td>
+                                </tr>
+                                <tr>
+                                    <td>DREPT</td>
+                                    <td>145</td>
+                                    <td>+ Utilitati </td>
+                                </tr>
+                                <tr>
+                                    <td>C3 - GARSONIERE</td>
+                                    <td>200</td>
+                                    <td>*</td>
+                                </tr>
+                                <tr>
+                                    <td>RENASTERII</td>
+                                    <td>250</td>
+                                    <td>*</td>
+                                </tr>
+                                <tr>
+                                    <td>G4</td>
+                                    <td>200</td>
+                                    <td>+ Utilitati *</td>
+                                </tr>
+                            </table>
+                            <span class="tarife">
+                                * Tarifele de cazare pot suferi modificări în funcție de prețul utilităților și
+                                nivelul subvenției acordate pentru fiecare student în parte
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <script>
+                        // Get the modal
+                        var modal = document.getElementById("myModal");
+
+                        // Get the button that opens the modal
+                        var btn = document.getElementById("myBtn");
+
+                        // Get the <span> element that closes the modal
+                        var span = document.getElementsByClassName("close")[0];
+
+                        // When the user clicks the button, open the modal
+                        btn.onclick = function () {
+                            modal.style.display = "block";
+                        }
+
+                        // When the user clicks on <span> (x), close the modal
+                        span.onclick = function () {
+                            modal.style.display = "none";
+                        }
+
+                        // When the user clicks anywhere outside of the modal, close it
+                        window.onclick = function (event) {
+                            if (event.target == modal) {
+                                modal.style.display = "none";
+                            }
+                        }
+                    </script>
+
+
+
+
+
+                    <!--
+        <div>
+            <table style="overflow-x:auto">
+                <tr>
+                    <th>Camin</th>
+                    <th>Tarif</th>
+                    <th>Observatii</th>
+                </tr>
+                <tr>
+                    <td>C12</td>
+                    <td>145</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>C13</td>
+                    <td>145</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>CAMELIA</td>
+                    <td>145</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>C15</td>
+                    <td>120</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>C16</td>
+                    <td>120</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>C17</td>
+                    <td>120</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>C3</td>
+                    <td>115</td>
+                    <td>*</td>
+                </tr>
+                <tr>
+                    <td>DREPT</td>
+                    <td>145</td>
+                    <td>+ Utilitati </td>
+                </tr>
+                <tr>
+                    <td>C3 - GARSONIERE</td>
+                    <td>200</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>RENASTERII</td>
+                    <td>250</td>
+                    <td>*</td>
+                </tr>
+                <tr>
+                    <td>G4</td>
+                    <td>200</td>
+                    <td>+ Utilitati *</td>
+                </tr>
+            </table>
+        </div>
+        
+            -->
+                </div>
+            </div>
+            <div class="home-feature-card07">
+                <div class="lista1">
+                    <h2 class="home-text10">Documente utile</h2>
+                    <div class="home-feature-card08">
+                        <a style="text-decoration:none; color:black; font-weight:300" href="https://www.uvt.ro/wp-content/uploads/2021/07/Anexa-3_Regulament-de-cazare_editia-II-revizuit.pdf ">
+                            Regulament de cazare</a>
+                            <svg viewBox="0 0 1024 1024" class="home-icon08">
+                                <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
+                            </svg>
+                    </div>
+                    <div class="home-feature-card09">
+                        <a style="text-decoration: none; color: black; font-weight: 300"href="https://drive.google.com/file/d/1bUxQCQPwgSZMJ8brHHBbuSvt9HbBr9zR/view">
+                            Contract de inchiriere</a>
+                            <svg viewBox="0 0 1024 1024" class="home-icon10">
+                                <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
+                            </svg>
+                    </div>
+                    <div class="home-feature-card10">
+                        <a style="text-decoration: none; color: black; font-weight: 300"; href="http://www.uvt.ro/wp-content/uploads/sites/3/2021/07/Anexa-1_2021-2022_edit.pdf">
+                            Anexa 1</a>
+                            <svg viewBox="0 0 1024 1024" class="home-icon12">
+                                <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
+                            </svg>
+                    </div>
+                    <!--
+    <div class="home-feature-card11">
+        <span>Text</span>
+        <svg viewBox="0 0 1024 1024" class="home-icon14">
+            <path d="M366 708l196-196-196-196 60-60 256 256-256 256z"></path>
+        </svg>
+    </div>-->
+                </div>
+                <div class="lista2">
+                    <h2 class="home-text15">Ghiduri utile</h2>
+                    <div class="home-feature-card12">
+                        <a style="text-decoration: none; color: black; font-weight: 300"; href="https://www.uvt.ro/educatie/wp-content/uploads/sites/3/2020/10/Ghid-cazare-on-line-pentru-studenti.pdf">Ghid proces de cazare - studenții din anul, II, III, IV (licență), respectiv anul II (masterat)</a>
+                    </div>
+                    <div class="home-feature-card13">
+                        <a style="text-decoration: none; color: black; font-weight: 300"; href="https://www.uvt.ro/educatie/wp-content/uploads/sites/3/2020/10/Ghid_cazare_anul-I-ultima-variant%C4%83-final%C4%83.pdf">Ghid proces de cazare - studenții din anul I </a>
+                            
+                    </div>
+                    <div class="home-feature-card14">
+                        <a style="text-decoration: none; color: black; font-weight: 300";  href="https://www.uvt.ro/educatie/wp-content/uploads/sites/3/2020/10/Confirmarea-locului.pdf">
+                            Procedura de confirmare a locului de cazare</a>
+                            
+                    </div>
+                </div>
+            </div>                        
+            
+        </div>
+        
+    </div>
+</div>
+
+

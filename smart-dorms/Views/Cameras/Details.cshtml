@@ -1,0 +1,240 @@
+﻿
+@using smart_dorms.Models;
+@using smart_dorms.Utils;
+@using Microsoft.AspNetCore.Http;
+@model smart_dorms.Models.Camera
+
+@{
+    ViewData["Title"] = "Details";
+    bool isAdmin = bool.Parse(Context.Session.GetString(smart_dorms.Utils.Constants.IsAdminKey));
+    bool succes = Int32.TryParse(Context.Session.GetString(smart_dorms.Utils.Constants.RoomKey), out int userCameraId);
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>W3.CSS Template</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body, h1, h2, h3, h4, h5, h6 {
+            font-family: "Raleway", Arial, Helvetica, sans-serif
+        }
+
+        .mySlides {
+            display: none
+        }
+    </style>
+</head>
+<body>
+    <div class="w3-main w3-white" style="margin-left:260px">
+
+        <!-- Push down content on small screens -->
+        <div class="w3-hide-large" style="margin-top:80px"></div>
+
+        <!-- Slideshow Header -->
+        <div class="w3-container" id="apartment">
+            @{
+                if (succes && userCameraId == Model.Id)
+                {
+
+
+                    <h1>Camera mea</h1>
+                }
+                else
+                {
+                    <h1>Camera @Model.NrCamera</h1>
+                }
+            }
+            <div class="w3-display-container mySlides">
+                <img src="https://oficialmedia.com/proiectul-si-stadiul-lucrarilor-noului-camin-multifunctional-al-uvt-a-fost-prezentat-lui-ludovic-orban-de-catre-marilen-pirtea/caminuvt7/" style="width:100%;margin-bottom:-6px">
+                <div class="w3-display-bottomleft w3-container w3-black">
+                    <p>Birouri</p>
+                </div>
+            </div>
+            <div class="w3-display-container mySlides">
+                <img src="https://oficialmedia.com/proiectul-si-stadiul-lucrarilor-noului-camin-multifunctional-al-uvt-a-fost-prezentat-lui-ludovic-orban-de-catre-marilen-pirtea/caminuvt8/" style="width:100%;margin-bottom:-6px">
+                <div class="w3-display-bottomleft w3-container w3-black">
+                    <p>Paturi</p>
+                </div>
+            </div>
+        </div>
+        <div class="w3-row-padding w3-section">
+            <div class="w3-col s3">
+                <img class="demo w3-opacity w3-hover-opacity-off" src="https://oficialmedia.com/proiectul-si-stadiul-lucrarilor-noului-camin-multifunctional-al-uvt-a-fost-prezentat-lui-ludovic-orban-de-catre-marilen-pirtea/caminuvt7/" style="width:100%;cursor:pointer" onclick="currentDiv(1)" title="Birouri">
+            </div>
+            <div class="w3-col s3">
+                <img class="demo w3-opacity w3-hover-opacity-off" src="https://oficialmedia.com/proiectul-si-stadiul-lucrarilor-noului-camin-multifunctional-al-uvt-a-fost-prezentat-lui-ludovic-orban-de-catre-marilen-pirtea/caminuvt8/" style="width:100%;cursor:pointer" onclick="currentDiv(2)" title="Paturile">
+            </div>
+        </div>
+
+        <div class="w3-container">
+            <h4><strong>Locuri ocupate in camera:</strong></h4>
+            <div class="w3-row w3-large">
+                <div class="w3-col s6">
+                    @{
+                        if ((Model.IdTipCameraNavigation.NrMaxLocuriDisp - Model.NrPersoane) <= 0)
+                        {
+                            <p>Camera ocupata!</p>
+                            <p><i class="fa fa-fw fa-male"></i>Numar maxim persoane in camera: @Html.DisplayFor(model => model.IdTipCameraNavigation.NrMaxLocuriDisp) </p>
+                        }
+                        else
+                        {
+                            <p>
+                                <i class="fa fa-fw fa-male"></i>
+                                @Html.DisplayFor(model => model.NrPersoane) din @Html.DisplayFor(model => model.IdTipCameraNavigation.NrMaxLocuriDisp)
+                            </p>
+                        }/*
+                        if (isAdmin)
+                        {
+                            <a style="color:orangered" asp-controller="Cameras" asp-action="UseriList" asp-route-id="@(Model.Id)">Vezi persoanele din camera aceasta</a>
+                        }*/
+                    }
+                </div>
+            </div>
+            <hr>
+
+            <h4><strong>Facilități</strong></h4>
+            <p>
+                <i class="fa fa-fw fa-shower"></i>
+                <i class="fa fa-fw fa-wifi"></i>
+                <i class="fa fa-fw fa-tv"></i>
+                <i class="fa fa-fw fa-cutlery"></i>
+                <i class="fa fa-fw fa-thermometer"></i>
+                <i class="fa fa-fw fa-wheelchair"></i>
+            </p>
+            <div class="w3-row w3-large">
+                <div class="w3-col s6">
+                    @{
+                        foreach (Obiecte o in (List<Obiecte>)ViewData[Constants.ObjectListKey])
+                        {
+                            if (o.Cantitate > 0)
+                            {
+                                <p>
+                                    @($"Avem {o.Cantitate} {o.IdTipObiectNavigation.Nume}")
+                                </p>
+                            }
+
+                        }
+                    }
+
+                </div>
+                <div class="w3-col s6">
+                    @{
+                        foreach (Obiecte o in (List<Obiecte>)ViewData[Constants.ObjectListKey])
+                        {
+                            if (o.Cantitate <= 0)
+                            {
+                                <p>
+                                    @($"Nu avem {o.IdTipObiectNavigation.Nume}")
+                                </p>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+            <hr>
+
+            @{
+                if (true)
+                {
+                    if (userCameraId != Model.Id)
+                    {
+                        if ((Model.IdTipCameraNavigation.NrMaxLocuriDisp - Model.NrPersoane) > 0)
+                        {
+                            int? PreviousRoomId = (int?)ViewData[Constants.PreviousRoomChangeKey];
+                            if (PreviousRoomId == null)
+                            {
+                                if (userCameraId != Model.Id && userCameraId != 0)
+                                {
+                                    <a class="btn btn-danger" asp-controller="Requests" asp-action="ChangeRoom" asp-route-roomId="@Model.Id"> Schimba camera!</a>
+
+                                }
+                                else
+                                {
+                                    <a class="btn btn-danger" asp-controller="Dosars" asp-action="DepunereDosar" asp-route-roomId="@Model.Id"> Vreau camera asta!</a>
+                                }
+                            }
+                            else
+                            {
+                                if (Model.Id == PreviousRoomId.Value)
+                                {
+                                    <p>Ai deja o cerere pentru aceasta camera!</p>
+                                }
+                                else
+                                {
+                                    Camera previousCamera = (Camera)ViewData[Constants.PreviousRoomInfoKey];
+                                    <h4><strong>Observatii: </strong></h4>
+                                    <p>Deja ai o cerere pentru camera @previousCamera.NrCamera, etajul @previousCamera.NrEtaj, din caminul @previousCamera.IdCaminNavigation.NameCamin</p>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <h4><strong>Observatii: </strong></h4>
+                            <p>Ne pare rau, nu mai sunt locuri!</p>
+                        }
+                    }
+                }
+                else
+                {
+                    <a asp-action="Index">Back to List </a>
+                }
+            }
+        </div>
+        <hr>
+
+
+
+
+        <!-- End page content -->
+    </div>
+
+
+
+    <script>
+        // Script to open and close sidebar when on tablets and phones
+        function w3_open() {
+            document.getElementById("mySidebar").style.display = "block";
+            document.getElementById("myOverlay").style.display = "block";
+        }
+
+        function w3_close() {
+            document.getElementById("mySidebar").style.display = "none";
+            document.getElementById("myOverlay").style.display = "none";
+        }
+
+        // Slideshow Apartment Images
+        var slideIndex = 1;
+        showDivs(slideIndex);
+
+        function plusDivs(n) {
+            showDivs(slideIndex += n);
+        }
+
+        function currentDiv(n) {
+            showDivs(slideIndex = n);
+        }
+
+        function showDivs(n) {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demo");
+            if (n > x.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = x.length }
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" w3-opacity-off", "");
+            }
+            x[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " w3-opacity-off";
+        }
+    </script>
+
+</body>
+</html>
