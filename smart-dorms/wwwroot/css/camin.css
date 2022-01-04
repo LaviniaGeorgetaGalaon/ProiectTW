@@ -67,10 +67,7 @@
     position: absolute;
     padding: 3%;
     align-items: center;
-    border-color: rgba(120, 120, 120, 0.4);
-    border-style: hidden;
-    border-width: 2px;
-    border-radius: 25px;
+    
     flex-direction: column;
     justify-content: flex-start;
     background: linear-gradient( 359.43deg, rgba(255, 255, 255, 0.1) 0.51%, rgba(255, 255, 255, 0.4) 99.52%);
@@ -78,7 +75,7 @@
     backdrop-filter: blur(15px);
     border-radius: 25px;
     margin-left: 6%;
-    border-radius: 25px;
+    border: 2px solid lightgray;
 }
 
 .circle1 {

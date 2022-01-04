@@ -4,32 +4,38 @@
     ViewData["Title"] = "Index";
 }
 <head>
+    <link href='https://fonts.googleapis.com/css?family=Muli' rel='stylesheet'>
     <style>
         body {
             background-image: url("../images/bubble.jpg");
         }
 
         table {
-            font-family: arial, sans-serif;
+            font-family: 'Muli';
             border-collapse: collapse;
-            width: 100%;
+            width: 40%;
+            font-size: 1vw;
+            height:75%;
         }
 
         td, th {
             border: 1px solid #dddddd;
             text-align: left;
-            padding: 8px;
+            padding: 2%;
+            font-size: 1vw;
         }
 
         tr:nth-child(even) {
             background-color: #dddddd;
+            font-size: 1vw;
         }
+
         .home-feature-card01 {
             top: 1%;
             margin-top: 7%;
             flex: 0;
             left: 2%;
-            width: 80%;
+            width: 90%;
             height: auto;
             position: absolute;
             padding: 3%;
@@ -39,7 +45,7 @@
             box-shadow: 0px 4px 24px -1px rgb(212 175 156 / 25%);
             backdrop-filter: blur(15px);
             border-radius: 25px;
-            margin-left: 6%;
+            margin-left: 2%;
         }
     </style>
 </head>
@@ -60,7 +66,7 @@
                     foreach (var item in Model.Where(x => x.NrCamera <= 25))
                     {
                         <td style="background: @( item.NrPersoane < item.IdTipCameraNavigation.NrMaxLocuriDisp ? "#58e502" : "#ff0000") ">
-                            <a style="color: black; align-items: center; justify-content: center; display: flex" asp-controller="Cameras" asp-action="Details" asp-route-id="@(item.Id)"> @Html.DisplayFor(modelItem => item.NrCamera)</a>
+                            <a style=" font-size: 0.75vw; color: black; align-items: center; justify-content: center; display: flex" asp-controller="Cameras" asp-action="Details" asp-route-id="@(item.Id)"> @Html.DisplayFor(modelItem => item.NrCamera)</a>
                         </td>
                     }
                 }
@@ -77,8 +83,8 @@
                 @{
                     foreach (var item in Model.Where(x => x.NrCamera > 25 && x.NrCamera <= 50))
                     {
-                        <td style="background: @( item.NrPersoane < item.IdTipCameraNavigation.NrMaxLocuriDisp ? "green" : "red") ">
-                            <a style="color:black" asp-controller="Cameras" asp-action="Details" asp-route-id="@(item.Id)"> @Html.DisplayFor(modelItem => item.NrCamera)</a>
+                        <td style="background: @( item.NrPersoane < item.IdTipCameraNavigation.NrMaxLocuriDisp ? "#58e502" : "#ff0000") ">
+                            <a style="font-size: 0.75vw; color: black " asp-controller="Cameras" asp-action="Details" asp-route-id="@(item.Id)"> @Html.DisplayFor(modelItem => item.NrCamera)</a>
 
                         </td>
                     }

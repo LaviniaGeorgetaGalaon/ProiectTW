@@ -50,7 +50,7 @@ namespace smart_dorms
             else
             {
                 var contentType = model.MyImage.ContentType;
-                BlobServiceClient blobServiceClient = new BlobServiceClient("DefaultEndpointsProtocol=https;AccountName=uvtdemosteam3;AccountKey=rycYcMytEOF80qJfFf5p91NqTtZHKHe4ZSSQyQUaCwEAAiPnHpuqPsmIseG+BWsTXujeSNuCqqk+1j2J3flDKw==;EndpointSuffix=core.windows.net");
+                BlobServiceClient blobServiceClient = new BlobServiceClient("DefaultEndpointsProtocol=https;AccountName=dosare;AccountKey=nAFcDVcSP2BnMF4WqM1y3Evxx93TN3Jsv+WSbzIjTgpWUFpu+/q6L5qhw/wpyBBo+sEwR0h03wvseHaL7x9Xpw==;EndpointSuffix=core.windows.net");
                 BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("dosare");
 
                 BlobClient blobClient = containerClient.GetBlobClient(fileName);

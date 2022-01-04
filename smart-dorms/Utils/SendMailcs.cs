@@ -12,7 +12,7 @@ namespace smart_dorms.Utils
     {
         public static async Task Execute(string numeCerere, string email, string numeUtilizator, int idStatus)
         {
-            var client = new SendGridClient("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");
+            var client = new SendGridClient("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");
             var from = new EmailAddress("UVTDorms@e-uvt.ro", "Admin UVT Dorms");
             var subject = "Update cerere " + numeCerere;
             var to = new EmailAddress(email, numeUtilizator);

@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/css/style2.css" />
     <link rel="stylesheet" href="~/css/Layout-style.css" />
+   
 </head>
 <body>
     <div>
@@ -37,22 +38,22 @@
                                 <a class="home-text20" asp-area=" " asp-controller="Camins" asp-action="Index">Camine</a>
                                 <a class="home-text21" asp-area="" asp-controller="Cameras" asp-action="Status">Status camere</a>
                                 <a class="home-text22" asp-area=" " asp-controller="Requests" asp-action="Index">Vizualizare tichete</a>
-                                
-                                   
-                                        if (User.Identity.IsAuthenticated)
-                                        {
 
-                                            <a class="home-text24" asp-area="AzureAD" asp-controller="Account" asp-action="SignOut">Deconectare</a>
 
-                                        }
-                                        else
-                                        {
+                                if (User.Identity.IsAuthenticated)
+                                {
 
-                                            <a class="home-text24" asp-area="AzureAD" asp-controller="Account" asp-action="SignIn">Conectare</a>
+                                    <a class="home-text24" asp-area="AzureAD" asp-controller="Account" asp-action="SignOut">Deconectare</a>
 
-                                        }
-                                    
-                                
+                                }
+                                else
+                                {
+
+                                    <a class="home-text24" asp-area="AzureAD" asp-controller="Account" asp-action="SignIn">Conectare</a>
+
+                                }
+
+
                             }
                             else
                             {
@@ -60,15 +61,15 @@
                                 <a class="home-text20" asp-area=" " asp-controller="Camins" asp-action="Index">Camine</a>
                                 <a class="home-text21" asp-area="" asp-controller="Cameras" asp-action="Status">Status camere</a>
                                 <a class="home-text22" asp-area=" " asp-controller="Requests" asp-action="Create">Creare tichet</a>
-                                <a class="home-text23" asp-area=" " asp-controller="Requests" asp-action="IstoricCereri">Tichetele mele</a>                                   
-                                        if (User.Identity.IsAuthenticated)
-                                        {
-                                            <a class="home-text24" asp-area="AzureAD" asp-controller="Account" asp-action="SignOut">Deconectare <i class="fa fa-sign-out" aria-hidden="true"></i></a>
-                                        }
-                                        else
-                                        {
-                                            <a class="home-text24" asp-area="AzureAD" asp-controller="Account" asp-action="SignIn">Conectare</a>
-                                        }                               
+                                <a class="home-text23" asp-area=" " asp-controller="Requests" asp-action="IstoricCereri">Tichetele mele</a>
+                                if (User.Identity.IsAuthenticated)
+                                {
+                                    <a class="home-text24" asp-area="AzureAD" asp-controller="Account" asp-action="SignOut">Deconectare <i class="fa fa-sign-out" aria-hidden="true"></i></a>
+                                }
+                                else
+                                {
+                                    <a class="home-text24" asp-area="AzureAD" asp-controller="Account" asp-action="SignIn">Conectare</a>
+                                }
                             }
                         }
                     </nav>
@@ -80,7 +81,7 @@
                 </div>
 
             </div>
-            
+
         </div>
     </div>
     @RenderSection("Scripts", required: false)

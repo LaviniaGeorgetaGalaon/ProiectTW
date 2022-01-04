@@ -183,5 +183,15 @@ namespace smart_dorms
 
             return View(camin);
         }
+
+       
+        public async Task<IActionResult> StatusCamine(int camin = 1)
+        {
+            var uvtdemosdbContext = _context.Camera
+                .Where(c=> c.IdCamin == camin)
+                .Include(c => c.IdCaminNavigation)
+                .Include(c => c.IdTipCameraNavigation);
+            return View(await uvtdemosdbContext.ToListAsync());
+        }
     }
 }

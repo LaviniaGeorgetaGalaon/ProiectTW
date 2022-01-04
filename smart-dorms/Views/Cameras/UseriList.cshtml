@@ -1,25 +1,27 @@
-﻿@model IEnumerable<smart_dorms.Models.Camin>
-@using Microsoft.AspNetCore.Http;
-@using Newtonsoft.Json;
+﻿@model smart_dorms.Models.Camera
+@using smart_dorms.Models;
+@using smart_dorms.Utils;
+
+
 
 @{
-    ViewData["Title"] = "Index";
-    var user = JsonConvert.DeserializeObject<smart_dorms.Models.Useri>(Context.Session.GetString(smart_dorms.Utils.Constants.UserKey));
-    bool isAdmin = user == null ? false : user.IsAdmin;
+    ViewData["Title"] = "UseriList";
 }
 
 
 <head>
     <link href='https://fonts.googleapis.com/css?family=Muli' rel='stylesheet'>
-    <link rel="stylesheet" href="/css/camin.css"/>
-    
+    <link rel="stylesheet" href="/css/camin.css" />
     <style>
         html {
             font-family: 'Muli';
+            background-image: url("~/images/bubble.jpg");
         }
+
         body {
-            background-image: url("../images/bubble.jpg");
+            
         }
+
         table {
             width: 85%;
             border-radius: 10px;
@@ -93,56 +95,35 @@
 </head>
 
 <div>
-    <!--dust particel
-    <div>
-        <div class="starsec"></div>
-        <div class="starthird"></div>
-        <div class="starfourth"></div>
-        <div class="starfifth"></div>
-    </div>-->
-   
+    <h1>Locatari</h1>
     <div class="home-feature-card01">
         <table>
             <thead>
                 <tr class="tr_head">
                     <th class="first-header">
-                        Nume Camin
+                        Id utilizator
                     </th>
                     <th class="second-header">
-                        Adresa
+                        Email
                     </th>
-                    <th class="third-header"></th>
+                    <th class="third-header">
+                        Rol
+                    </th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @foreach (Useri u in (List<Useri>)ViewData[Constants.UseriListKey])
                 {
                     <tr>
                         <td class="first">
-
-                            @Html.DisplayFor(modelItem => item.NameCamin)
+                            @Html.DisplayFor(modelItem => u.Id)
                         </td>
                         <td class="second">
-                            @Html.DisplayFor(modelItem => item.LocatieCamin)
-
+                            @Html.DisplayFor(modelItem => u.IdDateUserNavigation.Email)
                         </td>
-
-                        @{
-                            if (isAdmin)
-                            {
-                                <td class="third">
-                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                                    <a asp-action="Details" asp-route-id="@item.Id">Detalii</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.Id">Stergeti</a>
-                                </td>
-                            }
-                            else
-                            {
-                                <td class="third">
-                                    <a asp-action="Details" asp-route-id="@item.Id">Detalii</a>
-                                </td>
-                            }
-                        }
+                        <td class="third">
+                            @Html.DisplayFor(modelItem => u.IdRolNavigation.Nume)
+                        </td>
 
                     </tr>
                 }
@@ -151,11 +132,8 @@
 
     </div>
 </div>
-@{
-    if (isAdmin)
-    {
         <p>
-            <a asp-action="Create">Creati un camin nou!</a>
+            <a asp-action="Details" asp-route-id="@Model.Id">Inapoi la detalii</a>
         </p>
-    }
-}
+    
+
